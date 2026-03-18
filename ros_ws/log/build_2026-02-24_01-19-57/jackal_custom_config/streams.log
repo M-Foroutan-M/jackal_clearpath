@@ -1,0 +1,32 @@
+[0.011s] Invoking command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config -- -j4 -l4
+[0.045s] Invoked command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config -- -j4 -l4
+[0.054s] Invoking command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config
+[0.061s] -- Install configuration: ""
+[0.061s] -- Execute custom install script
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/__pycache__/sick_tim_custom.launch.cpython-310.pyc
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/sick_tim_custom.launch.py
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/sick_tim_custom.launch.py.bak.2026-02-23-213304
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/slam_toolbox_j100.launch.py
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/slam_toolbox_jackal.launch.py
+[0.062s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/config/jackal_slam.yaml
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/__pycache__/sick_tim_custom.launch.cpython-310.pyc
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/sick_tim_custom.launch.py
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/sick_tim_custom.launch.py.bak.2026-02-23-213304
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/slam_toolbox_j100.launch.py
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/slam_toolbox_jackal.launch.py
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/package_run_dependencies/jackal_custom_config
+[0.063s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/parent_prefix_path/jackal_custom_config
+[0.064s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/ament_prefix_path.sh
+[0.064s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/ament_prefix_path.dsv
+[0.064s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/path.sh
+[0.064s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/path.dsv
+[0.064s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.bash
+[0.065s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.sh
+[0.065s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.zsh
+[0.065s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.dsv
+[0.065s] -- Symlinking: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/package.dsv
+[0.073s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/packages/jackal_custom_config
+[0.073s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/cmake/jackal_custom_configConfig.cmake
+[0.074s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/cmake/jackal_custom_configConfig-version.cmake
+[0.074s] -- Up-to-date symlink: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/package.xml
+[0.076s] Invoked command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config

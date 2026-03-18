@@ -1,0 +1,22 @@
+[0.011s] Invoking command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config -- -j4 -l4
+[0.044s] Invoked command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config -- -j4 -l4
+[0.053s] Invoking command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config
+[0.060s] -- Install configuration: ""
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch
+[0.060s] -- Installing: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/launch/sick_tim_custom.launch.py
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/package_run_dependencies/jackal_custom_config
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/parent_prefix_path/jackal_custom_config
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/ament_prefix_path.sh
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/ament_prefix_path.dsv
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/path.sh
+[0.060s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/environment/path.dsv
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.bash
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.sh
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.zsh
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/local_setup.dsv
+[0.061s] -- Installing: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/package.dsv
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/ament_index/resource_index/packages/jackal_custom_config
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/cmake/jackal_custom_configConfig.cmake
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/cmake/jackal_custom_configConfig-version.cmake
+[0.061s] -- Up-to-date: /home/administrator/jackal_clearpath_ws/ros_ws/install/jackal_custom_config/share/jackal_custom_config/package.xml
+[0.063s] Invoked command in '/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config

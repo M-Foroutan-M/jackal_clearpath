@@ -1,0 +1,1 @@
+/home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/nav2_localization_jackal.launch.py
