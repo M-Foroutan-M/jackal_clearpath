@@ -33,6 +33,7 @@ repository_layout:
     - .gitignore
     - maps/
     - ros_ws/
+    - config/
   package:
     - CMakeLists.txt
     - package.xml
