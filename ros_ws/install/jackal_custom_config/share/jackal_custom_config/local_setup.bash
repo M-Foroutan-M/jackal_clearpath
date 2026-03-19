@@ -1,1 +1,0 @@
-/home/administrator/jackal_clearpath_ws/ros_ws/build/jackal_custom_config/ament_cmake_environment_hooks/local_setup.bash
