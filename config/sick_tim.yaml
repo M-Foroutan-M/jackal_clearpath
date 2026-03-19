@@ -1,0 +1,15 @@
+sensors:
+  front_lidar:
+    type: sick_tim
+    model: tim_5xx
+    driver: sick_scan_xd
+    connection:
+      type: ethernet
+      hostname: 192.168.131.20
+      port: 2112
+    frame: front_laser
+    mount: front_0_mount
+    topic: scan
+    tf_publish_rate: 0.0
+    tf_base_frame_id: base_link
+    nav_tf_parent_frame_id: base_link

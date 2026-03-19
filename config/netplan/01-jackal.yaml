@@ -1,0 +1,22 @@
+network:
+  version: 2
+
+  renderer: networkd
+
+  ethernets:
+    eno1:
+      dhcp4: no
+      dhcp6: no
+    enp1s0:
+      dhcp4: no
+      dhcp6: no
+
+  bridges:
+    br0:
+      interfaces: [eno1, enp1s0]
+      addresses: [192.168.131.1/24]
+      dhcp4: no
+      dhcp6: no
+      parameters:
+        stp: false
+        forward-delay: 0
