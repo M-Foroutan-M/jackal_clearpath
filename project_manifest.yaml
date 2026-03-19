@@ -1,0 +1,339 @@
+project:
+  name: jackal_clearpath_ws
+  description: >
+    Custom ROS 2 Humble workspace for Clearpath Jackal with SICK 2D lidar,
+    SLAM Toolbox mapping, Nav2 localization, and Nav2 navigation.
+  robot:
+    platform: Clearpath Jackal
+    ros_distro: humble
+    namespace: j100_0796
+    base_frame: base_link
+    odom_frame: odom
+    map_frame: map
+    lidar_frame: lidar2d_0_laser
+    lidar_topic: /j100_0796/sensors/lidar2d_0/scan
+    tf_topic: /j100_0796/tf
+    tf_static_topic: /j100_0796/tf_static
+    cmd_vel_topic: /j100_0796/cmd_vel
+    amcl_pose_topic: /j100_0796/amcl_pose
+    map_topic_mapping: /map
+    map_topic_localization: /j100_0796/map
+
+filesystem:
+  workspace_root: /home/administrator/jackal_clearpath_ws
+  ros_ws: /home/administrator/jackal_clearpath_ws/ros_ws
+  package_root: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config
+  maps_dir: /home/administrator/jackal_clearpath_ws/maps
+  active_map_yaml: /home/administrator/jackal_clearpath_ws/maps/map_2.yaml
+  active_map_pgm: /home/administrator/jackal_clearpath_ws/maps/map_2.pgm
+
+repository_layout:
+  root:
+    - .git
+    - .gitignore
+    - maps/
+    - ros_ws/
+  package:
+    - CMakeLists.txt
+    - package.xml
+    - config/
+    - launch/
+    - docs/
+    - rviz/
+    - scripts/
+  config:
+    active:
+      - config/active/jackal_slam.yaml
+      - config/active/nav2_localization.yaml
+      - config/active/nav2_navigation.yaml
+    legacy:
+      - config/legacy/av2_jackal_2.yaml
+      - config/legacy/av2_localization_jackal_2.yaml
+      - config/legacy/jackal_slam.yaml
+      - config/legacy/nav2_jackal.yaml
+      - config/legacy/nav2_localization_jackal.txt
+  launch:
+    active:
+      - launch/slam_toolbox_jackal.launch.py
+      - launch/nav2_localization_jackal.launch.py
+      - launch/nav2_navigation_jackal.launch.py
+    sensors:
+      - launch/sensors/sick_tim_custom.launch.py
+    legacy:
+      - launch/legacy/nav2_localization_jackal_legacy.launch.py
+      - launch/legacy/slam_toolbox_j100_legacy.launch.py
+      - launch/legacy/slam_toolbox_jackal_legacy.launch.py
+  scripts:
+    startup:
+      - scripts/startup/jackal_startup_legacy.sh
+
+environment:
+  bashrc_required_lines:
+    - source /etc/clearpath/setup.bash
+    - source ~/jackal_clearpath_ws/ros_ws/install/setup.bash
+    - export CP_CUSTOM_LAUNCH=$HOME/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/sensors/sick_tim_custom.launch.py
+  build_commands: |
+    cd ~/jackal_clearpath_ws/ros_ws
+    source /etc/clearpath/setup.bash
+    colcon build --symlink-install
+    source install/setup.bash
+  clean_rebuild_commands: |
+    rm -rf ~/jackal_clearpath_ws/ros_ws/build
+    rm -rf ~/jackal_clearpath_ws/ros_ws/install
+    rm -rf ~/jackal_clearpath_ws/ros_ws/log
+    cd ~/jackal_clearpath_ws/ros_ws
+    source /etc/clearpath/setup.bash
+    colcon build --symlink-install
+    source install/setup.bash
+
+runtime_architecture:
+  tf_chain: map -> odom -> base_link -> lidar2d_0_laser
+  modes:
+    mapping:
+      purpose: Build a live occupancy grid map using SLAM Toolbox.
+      required_processes:
+        - Jackal base / odometry / TF bringup
+        - SICK lidar driver
+        - slam_toolbox async node
+        - RViz on laptop
+      outputs:
+        - /map
+        - /map_metadata
+        - map save files (.yaml + .pgm)
+    localization:
+      purpose: Localize robot on saved map using AMCL and map_server.
+      required_processes:
+        - Jackal base / odometry / TF bringup
+        - SICK lidar driver
+        - map_server
+        - amcl
+        - RViz on laptop
+      outputs:
+        - /j100_0796/map
+        - /j100_0796/amcl_pose
+        - TF map -> odom
+    navigation:
+      purpose: Navigate on top of localization using Nav2.
+      required_processes:
+        - Localization stack already active
+        - planner_server
+        - controller_server
+        - behavior_server
+        - bt_navigator
+        - waypoint_follower
+        - velocity_smoother
+      outputs:
+        - /j100_0796/cmd_vel
+        - global and local costmaps
+        - path execution and recovery behaviors
+
+active_files:
+  slam_config: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/config/active/jackal_slam.yaml
+  localization_config: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/config/active/nav2_localization.yaml
+  navigation_config: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/config/active/nav2_navigation.yaml
+  slam_launch: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/slam_toolbox_jackal.launch.py
+  localization_launch: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/nav2_localization_jackal.launch.py
+  navigation_launch: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/nav2_navigation_jackal.launch.py
+  sensor_launch: /home/administrator/jackal_clearpath_ws/ros_ws/src/jackal_custom_config/launch/sensors/sick_tim_custom.launch.py
+
+bringup:
+  sensor_and_base:
+    description: Bring up lidar and underlying robot base/TF stack first.
+    commands: |
+      source ~/.bashrc
+      ros2 launch jackal_custom_config sick_tim_custom.launch.py
+    verification: |
+      ros2 topic list | grep scan
+      ros2 topic hz /j100_0796/sensors/lidar2d_0/scan
+      ros2 topic echo /j100_0796/tf --once
+      ros2 topic echo /j100_0796/tf_static --once
+      ros2 run tf2_ros tf2_echo odom base_link --ros-args -r /tf:=/j100_0796/tf -r /tf_static:=/j100_0796/tf_static
+      ros2 run tf2_ros tf2_echo base_link lidar2d_0_laser --ros-args -r /tf:=/j100_0796/tf -r /tf_static:=/j100_0796/tf_static
+
+  mapping:
+    description: Start SLAM Toolbox and build a map.
+    commands: |
+      source ~/.bashrc
+      ros2 launch jackal_custom_config slam_toolbox_jackal.launch.py
+    verification: |
+      ros2 topic list | grep map
+      ros2 topic echo /map --once
+    rviz:
+      command: |
+        rviz2 --ros-args \
+          -r /tf:=/j100_0796/tf \
+          -r /tf_static:=/j100_0796/tf_static \
+          -r /robot_description:=/j100_0796/robot_description
+      fixed_frame: map
+      displays:
+        - Map topic: /map
+        - LaserScan topic: /j100_0796/sensors/lidar2d_0/scan
+        - TF
+        - RobotModel
+      notes:
+        - For mapping mode, Map topic must be /map, not /j100_0796/map.
+        - Drive robot slowly in loops to fill the map.
+    save_map:
+      command: |
+        ros2 run nav2_map_server map_saver_cli -f ~/jackal_clearpath_ws/maps/map_2
+      outputs:
+        - /home/administrator/jackal_clearpath_ws/maps/map_2.yaml
+        - /home/administrator/jackal_clearpath_ws/maps/map_2.pgm
+
+  localization:
+    description: Start AMCL and map_server on saved map.
+    commands: |
+      source ~/.bashrc
+      ros2 launch jackal_custom_config nav2_localization_jackal.launch.py
+    verification_before_initial_pose: |
+      ros2 lifecycle get /j100_0796/map_server
+      ros2 lifecycle get /j100_0796/amcl
+      ros2 topic echo /j100_0796/map --once
+    rviz:
+      command: |
+        rviz2 --ros-args \
+          -r /tf:=/j100_0796/tf \
+          -r /tf_static:=/j100_0796/tf_static \
+          -r /initialpose:=/j100_0796/initialpose \
+          -r /goal_pose:=/j100_0796/goal_pose \
+          -r /robot_description:=/j100_0796/robot_description
+      fixed_frame: map
+      displays:
+        - Map topic: /j100_0796/map
+        - LaserScan topic: /j100_0796/sensors/lidar2d_0/scan
+        - TF
+        - RobotModel
+      notes:
+        - Use 2D Pose Estimate in RViz or publish /j100_0796/initialpose manually.
+        - After setting initial pose, move robot slightly so AMCL settles.
+    initial_pose_terminal_command: |
+      ros2 topic pub /j100_0796/initialpose geometry_msgs/msg/PoseWithCovarianceStamped "
+      header:
+        frame_id: 'map'
+      pose:
+        pose:
+          position:
+            x: 0.0
+            y: 0.0
+            z: 0.0
+          orientation:
+            z: 0.0
+            w: 1.0
+        covariance: [0.25, 0, 0, 0, 0, 0,
+                     0, 0.25, 0, 0, 0, 0,
+                     0, 0, 0.0, 0, 0, 0,
+                     0, 0, 0, 0.0, 0, 0,
+                     0, 0, 0, 0, 0.0, 0,
+                     0, 0, 0, 0, 0, 0.068]
+      "
+    localization_checks_after_initial_pose: |
+      ros2 topic echo /j100_0796/amcl_pose --once
+      ros2 run tf2_ros tf2_echo map odom --ros-args -r /tf:=/j100_0796/tf -r /tf_static:=/j100_0796/tf_static
+      ros2 run tf2_ros tf2_echo map base_link --ros-args -r /tf:=/j100_0796/tf -r /tf_static:=/j100_0796/tf_static
+
+  navigation:
+    description: Start Nav2 on top of already-running localization.
+    commands: |
+      source ~/.bashrc
+      ros2 launch jackal_custom_config nav2_navigation_jackal.launch.py
+    verification: |
+      ros2 lifecycle get /j100_0796/controller_server
+      ros2 lifecycle get /j100_0796/planner_server
+      ros2 lifecycle get /j100_0796/bt_navigator
+      ros2 topic info /j100_0796/cmd_vel
+      ros2 topic list | grep costmap
+    rviz:
+      command: |
+        rviz2 --ros-args \
+          -r /tf:=/j100_0796/tf \
+          -r /tf_static:=/j100_0796/tf_static \
+          -r /initialpose:=/j100_0796/initialpose \
+          -r /goal_pose:=/j100_0796/goal_pose \
+          -r /robot_description:=/j100_0796/robot_description
+      fixed_frame: map
+      displays:
+        - Map topic: /j100_0796/map
+        - LaserScan topic: /j100_0796/sensors/lidar2d_0/scan
+        - TF
+        - RobotModel
+        - Global Costmap
+        - Local Costmap
+        - Path
+      notes:
+        - Send only one short goal first.
+        - First goal should be 0.5 to 1.0 m ahead in open space.
+        - Do not preempt with a second goal during debugging.
+    first_goal_policy:
+      distance_meters: 0.5_to_1.0
+      area: open_space
+      preemption: disabled_for_debugging
+
+verification_matrix:
+  mapping_success:
+    - slam_toolbox starts without immediate parameter/path errors
+    - /map exists
+    - RViz shows a live map
+    - Map improves as robot moves
+  localization_success:
+    - map_server active
+    - amcl active
+    - /j100_0796/amcl_pose published
+    - TF map -> odom valid
+  navigation_success:
+    - controller_server active
+    - planner_server active
+    - bt_navigator active
+    - /j100_0796/cmd_vel has publishers
+    - robot accepts a short goal and attempts motion
+
+known_runtime_issues:
+  - name: amcl_queue_full
+    symptom: "Message Filter dropping message ... queue is full"
+    likely_causes:
+      - AMCL compute load too high
+      - TF/odometry not available or delayed
+      - localization started without full base/TF stack
+  - name: tf_cache_earlier_than_all_data
+    symptom: "timestamp on the message is earlier than all the data in the transform cache"
+    likely_causes:
+      - timing mismatch between lidar and TF
+      - node processing lag under load
+      - insufficient TF history during startup
+  - name: extrapolation_into_the_past
+    symptom: "Lookup would require extrapolation into the past"
+    likely_causes:
+      - planner/controller requesting older transform than current TF buffer has
+      - overloaded runtime causing lag
+  - name: duplicate_launch_filename
+    symptom: "file was found more than once in the share directory"
+    fix:
+      - Rename legacy launch files so they do not share the same filename as active launch files
+  - name: fastdds_shm_error
+    symptom: "RTPS_TRANSPORT_SHM Error"
+    likely_causes:
+      - stale Fast DDS shared memory files
+      - SHM transport init issue
+    common_fix: |
+      pkill -f ros2
+      sudo rm -f /dev/shm/fastrtps*
+      sudo rm -f /dev/shm/fastdds*
+
+git:
+  repo_root: /home/administrator/jackal_clearpath_ws
+  current_branch_pattern: feature/*
+  ignore_file: /home/administrator/jackal_clearpath_ws/.gitignore
+  tracked_project_content:
+    - maps/
+    - ros_ws/src/jackal_custom_config/
+    - .gitignore
+  untracked_build_artifacts_should_be_ignored:
+    - ros_ws/build/
+    - ros_ws/install/
+    - ros_ws/log/
+
+operational_notes:
+  - Do not run localization with only lidar; base/odometry/TF must also be running.
+  - Active files are under config/active and top-level launch/.
+  - Legacy files remain under config/legacy and launch/legacy for reference only.
+  - Maps are stored at project root in maps/.
+  - RViz always runs on laptop with TF remaps to /j100_0796/tf and /j100_0796/tf_static.
