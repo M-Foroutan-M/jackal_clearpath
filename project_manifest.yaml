@@ -325,6 +325,7 @@ git:
   ignore_file: /home/administrator/jackal_clearpath_ws/.gitignore
   tracked_project_content:
     - maps/
+    - config/
     - ros_ws/src/jackal_custom_config/
     - .gitignore
   untracked_build_artifacts_should_be_ignored:
