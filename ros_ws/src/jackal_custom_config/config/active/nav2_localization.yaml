@@ -9,17 +9,17 @@ j100_0796:
       base_frame_id: "base_link"
 
       scan_topic: "/j100_0796/sensors/lidar2d_0/scan"
-      scan_queue_size: 200
+      scan_queue_size: 10
 
       min_particles: 50
       max_particles: 150
       resample_interval: 1
 
-      update_min_d: 0.10
-      update_min_a: 0.10
-      transform_tolerance: 1.5
+      update_min_d: 0.20
+      update_min_a: 0.20
+      transform_tolerance: 0.5
 
-      laser_max_beams: 20
+      laser_max_beams: 40
       laser_min_range: 0.05
       laser_max_range: 20.0
       max_beams: 20
