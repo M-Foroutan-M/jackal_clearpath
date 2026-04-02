@@ -11,7 +11,4 @@ install(DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
-
-# THIS LINE IS MISSING AND REQUIRED:
 ament_package()

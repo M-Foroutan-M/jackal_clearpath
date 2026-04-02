@@ -1,0 +1,11 @@
+/**:
+  ros__parameters:
+    video_device: "/dev/video2"
+    image_width: 640
+    image_height: 480
+    framerate: 15.0
+    pixel_format: "mjpeg2rgb"
+    io_method: "mmap"
+    frame_id: "logitech_c920_2_frame"
+    camera_name: "logitech_c920_2"
+
