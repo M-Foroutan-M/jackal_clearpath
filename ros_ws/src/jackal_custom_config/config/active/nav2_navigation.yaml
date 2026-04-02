@@ -50,12 +50,12 @@ j100_0796:
         max_speed_xy: 0.35
         min_speed_theta: 0.0
 
-        acc_lim_x: 1.0
+        acc_lim_x: 0.5
         acc_lim_y: 0.0
-        acc_lim_theta: 2.0
-        decel_lim_x: -1.0
+        acc_lim_theta: 1.0
+        decel_lim_x: -0.5
         decel_lim_y: 0.0
-        decel_lim_theta: -2.0
+        decel_lim_theta: -1.0
 
         vx_samples: 20
         vy_samples: 1
