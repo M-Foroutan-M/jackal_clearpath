@@ -5,6 +5,7 @@ find_package(ament_cmake REQUIRED)
 
 install(
   PROGRAMS
+    scripts/keyboard_record_orchestrator.py
     scripts/goal_mission_orchestrator.py
     scripts/goal_mission_orchestrator_test.py
     scripts/simple_record_trigger.py

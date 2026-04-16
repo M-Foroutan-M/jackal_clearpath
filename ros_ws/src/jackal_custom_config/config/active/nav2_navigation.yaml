@@ -52,10 +52,10 @@ j100_0796:
 
         acc_lim_x: 0.5
         acc_lim_y: 0.0
-        acc_lim_theta: 1.0
+        acc_lim_theta: 0.3
         decel_lim_x: -0.5
         decel_lim_y: 0.0
-        decel_lim_theta: -1.0
+        decel_lim_theta: -0.3
 
         vx_samples: 20
         vy_samples: 1
