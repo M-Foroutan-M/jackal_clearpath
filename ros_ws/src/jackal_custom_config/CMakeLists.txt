@@ -1,13 +1,21 @@
 cmake_minimum_required(VERSION 3.8)
 project(jackal_custom_config)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch config
+install(
+  PROGRAMS
+    scripts/goal_mission_orchestrator.py
+    scripts/goal_mission_orchestrator_test.py
+    scripts/simple_record_trigger.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY
+    launch
+    config
+    rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
