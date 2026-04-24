@@ -1,0 +1,74 @@
+{
+  "_comment": "Configuration for 2USB+6RTSP to File pipeline (8 sources, AGX Orin optimized)",
+  "_note": "Restart the pipeline after changing settings",
+  "file_output": {
+    "path": "/app/output/synced_octo_output_tmstmp.mp4",
+    "enable_overlays": false,
+    "enable_debug_probes": true
+  },
+  "usb_cameras": {
+    "camera1_device": "/dev/video0",
+    "camera2_device": "/dev/video2",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "internal_camera_settings": {
+      "exposure_auto": 1,
+      "exposure_absolute": 157,
+      "exposure_auto_priority": 0
+    }
+  },
+  "rtsp_sources": {
+    "ip1": "192.168.1.170",
+    "ip2": "192.168.1.116",
+    "ip3": "192.168.1.223",
+    "port": "8554",
+    "camera1_mount_point": "/cam1",
+    "camera2_mount_point": "/cam2",
+    "latency_ms": 400,
+    "protocol": "tcp"
+  },
+  "sync_settings": {
+    "sync_inputs": 1,
+    "max_latency_ns": 200000000,
+    "frame_duration_ns": 33333333,
+    "batched_push_timeout_ms": 70,
+    "usb_queue_max_time_ns": 1000000000,
+    "usb_queue_max_buffers": 150,
+    "usb_queue_leaky": 0,
+    "rtsp_queue_max_time_ns": 1000000000,
+    "rtsp_queue_max_buffers": 150,
+    "rtsp_queue_leaky": 0
+  },
+  "sync_monitoring": {
+    "enable": true,
+    "log_interval_frames": 60,
+    "max_latency_variance_ms": 10
+  },
+  "timestamp_logging": {
+    "enable": true,
+    "log_interval_frames": 1,
+    "reference_camera": "usb_cam1"
+  },
+  "tiler": {
+    "rows": 4,
+    "columns": 2,
+    "width": 1920,
+    "height": 1080,
+    "output_resolution_div_factor":1.5
+  },
+  "encoder": {
+    "bitrate": 50000000,
+    "iframeinterval": 30,
+    "preset": "Preset_Medium",
+    "profile": "Profile_High"
+  },
+  "mp4_mux": {
+    "faststart": true
+  },
+  "file_sink": {
+    "sync": false,
+    "async": false,
+    "buffer_size": 8388608
+  }
+}

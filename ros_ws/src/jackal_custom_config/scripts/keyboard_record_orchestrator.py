@@ -7,6 +7,7 @@ import sys
 import termios
 import tty
 import uuid
+import select
 from datetime import datetime
 from pathlib import Path
 
@@ -23,13 +24,8 @@ class KeyboardRecordOrchestrator(Node):
         self.ssh_user = 'arp'
         self.ssh_host = '192.168.5.1'
 
-        # TEST COMMANDS FOR NOW
         self.ssh_start_command = 'bash /home/arp/start_recording.sh'
         self.ssh_stop_command = 'bash /home/arp/stop_recording_and_transfer.sh'
-
-        # Replace later with your real commands:
-        # self.ssh_start_command = 'bash /home/nvidia/start_recording.sh'
-        # self.ssh_stop_command = 'bash /home/nvidia/stop_recording.sh'
 
         self.start_key = 's'
         self.stop_key = 'x'
@@ -40,21 +36,36 @@ class KeyboardRecordOrchestrator(Node):
         self.current_bag_name = None
         self.camera_started = False
 
+        self.stdin_is_tty = sys.stdin.isatty()
+        self.settings = None
+
         self.get_logger().info('Keyboard record orchestrator is ready')
         self.get_logger().info(
             f'Press "{self.start_key}" to START, "{self.stop_key}" to STOP, "{self.quit_key}" to quit'
         )
 
-        self.settings = termios.tcgetattr(sys.stdin)
+        if not self.stdin_is_tty:
+            self.get_logger().error(
+                'stdin is not a TTY. Keyboard input will not work. '
+                'Run this node directly in an interactive terminal.'
+            )
+        else:
+            self.settings = termios.tcgetattr(sys.stdin.fileno())
+
         self.key_timer = self.create_timer(0.05, self.poll_keyboard)
 
     # ---------------------------------------------------------
     # Keyboard polling
     # ---------------------------------------------------------
     def poll_keyboard(self):
+        if not self.stdin_is_tty:
+            return
+
         key = self.get_key_nonblocking()
         if key is None:
             return
+
+        self.get_logger().info(f'Key received: {repr(key)}')
 
         if key == self.start_key:
             if not self.mission_active:
@@ -74,16 +85,15 @@ class KeyboardRecordOrchestrator(Node):
             rclpy.shutdown()
 
     def get_key_nonblocking(self):
-        tty.setraw(sys.stdin.fileno())
-        rlist = []
+        fd = sys.stdin.fileno()
+        tty.setraw(fd)
         try:
-            import select
             rlist, _, _ = select.select([sys.stdin], [], [], 0)
             if rlist:
                 return sys.stdin.read(1)
             return None
         finally:
-            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
+            termios.tcsetattr(fd, termios.TCSADRAIN, self.settings)
 
     # ---------------------------------------------------------
     # Mission control
@@ -215,7 +225,9 @@ class KeyboardRecordOrchestrator(Node):
                 self.camera_started = False
 
         self.mission_active = False
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
+
+        if self.stdin_is_tty and self.settings is not None:
+            termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, self.settings)
 
 
 def main(args=None):
@@ -227,7 +239,8 @@ def main(args=None):
     finally:
         node.cleanup()
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':

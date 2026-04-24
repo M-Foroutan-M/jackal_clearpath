@@ -1,0 +1,101 @@
+{
+  "_comment": "Configuration for 2USB to 2RTSP pipeline",
+  "_note": "Restart the pipeline after changing settings",
+  "rtsp_output": {
+    "port": "8554",
+    "camera1_mount_point": "/cam1",
+    "camera2_mount_point": "/cam2",
+    "camera1_udp_port": 5400,
+    "camera2_udp_port": 5401
+  },
+  "usb_cameras": {
+    "camera1_device": "/dev/video0",
+    "camera2_device": "/dev/video2",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "internal_camera_settings": {
+      "exposure_auto": 1,
+      "exposure_absolute": 157,
+      "exposure_auto_priority": 0
+    }
+  },
+  "overlay_settings": {
+    "enable_overlays": false,
+    "bypass_osd": true
+  },
+  "overlay_display": {
+    "font_name": "Arial",
+    "font_size": 28,
+    "font_color_rgba": [1.0, 1.0, 0.0, 1.0],
+    "background_rgba": [0.0, 0.0, 0.0, 0.8],
+    "x_offset": 1520,
+    "y_offset": 20
+  },
+  "source_labels": {
+    "camera1": "CAM1",
+    "camera2": "CAM2"
+  },
+  "v4l2_source": {
+    "do_timestamp": true,
+    "io_mode": 2,
+    "num_buffers": -1,
+    "pixel_aspect_ratio": "1/1"
+  },
+  "decoder": {
+    "mjpeg": 1,
+    "low_latency_mode": 1
+  },
+  "queue_pre_encoder": {
+    "max_size_buffers": 5,
+    "max_size_time_ns": 200000000,
+    "leaky": 2
+  },
+  "nvosd": {
+    "process_mode": 1,
+    "display_text": 1,
+    "gpu_id": 0
+  },
+  "encoder": {
+    "bitrate": 8000000,
+    "iframeinterval": 30,
+    "insert_sps_pps": 1,
+    "preset_level": 1,
+    "profile": 0,
+    "insert_vui": 1,
+    "maxperf_enable": 1,
+    "control_rate": 1,
+    "zerocopy": 1,
+    "async_mode": 1
+  },
+  "queue_post_encoder": {
+    "max_size_buffers": 10,
+    "max_size_time_ns": 200000000,
+    "leaky": 2
+  },
+  "rtp_payload": {
+    "config_interval": 1,
+    "payload_type": 96
+  },
+  "udp_sink": {
+    "host": "127.0.0.1",
+    "async": false,
+    "sync": 0
+  },
+  "rtsp_media_factory": {
+    "buffer_size": 524288,
+    "clock_rate": 90000,
+    "encoding_name": "H264",
+    "shared": true
+  },
+  "fps_monitoring": {
+    "enable": true,
+    "sample_count": 60,
+    "probe_locations": [
+      "source",
+      "raw",
+      "pre-enc",
+      "enc"
+    ]
+  }
+}

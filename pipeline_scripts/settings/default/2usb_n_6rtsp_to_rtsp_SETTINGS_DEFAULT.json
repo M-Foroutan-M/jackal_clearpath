@@ -1,0 +1,82 @@
+{
+  "_comment": "Configuration for 2USB+6RTSP to RTSP pipeline (8 sources, AGX Orin optimized)",
+  "_note": "Restart the pipeline after changing settings",
+  "rtsp_output": {
+    "port": "8554",
+    "mount_point": "/ds-octo",
+    "udp_port": 5400
+  },
+  "usb_cameras": {
+    "camera1_device": "/dev/video0",
+    "camera2_device": "/dev/video2",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "internal_camera_settings":{
+      "exposure_auto":1,
+      "exposure_absolute":157,
+      "exposure_auto_priority":0
+    }
+  },
+  "rtsp_sources": {
+    "ip1": "192.168.1.170",
+    "ip2": "192.168.1.116",
+    "ip3": "192.168.1.223",
+    "port": "8554",
+    "camera1_mount_point": "/cam1",
+    "camera2_mount_point": "/cam2",
+    "latency_ms": 50,
+    "protocol": "tcp"
+  },
+  "sync_settings": {
+    "sync_inputs": 1,
+    "max_latency_ns": 50000000,
+    "frame_duration_ns": 33333333,
+    "batched_push_timeout_ms": 40000,
+    "queue_max_buffers": 5,
+    "queue_max_time_ns": 50000000,
+    "leaky": 2
+  },
+  "sync_monitoring": {
+    "enable": true,
+    "log_interval_frames": 300,
+    "max_latency_variance_ms": 10
+  },
+  "tiler": {
+    "rows": 4,
+    "columns": 2,
+    "width": 1920,
+    "height": 1080,
+    "output_resolution_div_factor":2
+  },
+  "encoder": {
+    "bitrate": 14000000,
+    "iframeinterval": 30,
+    "preset": "Preset_LowLatency",
+    "profile": "Profile_Main"
+  },
+  "rtp_payload": {
+    "mtu": 1400
+  },
+  "overlays": {
+    "enable": true,
+    "font_size": 22,
+    "font": "Serif",
+    "font_color": "white",
+    "background_color": "black",
+    "source_labels": [
+      "USB Cam 1",
+      "USB Cam 2",
+      "IP1 Cam 1",
+      "IP1 Cam 2",
+      "IP2 Cam 1",
+      "IP2 Cam 2",
+      "IP3 Cam 1",
+      "IP3 Cam 2"
+    ],
+    "label_x_offset": 1520,
+    "label_y_offset": 20,
+    "latency_x_offset": 10,
+    "latency_y_offset": 40
+  }
+}
