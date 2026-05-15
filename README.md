@@ -15,7 +15,7 @@ A small public sample of the collected dataset, videos, and sensor data is avail
 **Sample dataset, video, and sensor data:**  
 https://drive.google.com/drive/folders/1SuZDrliUXXNWbA5bpu4QSsQ0KeXi8SNo?usp=drive_link
 
-![alt text](images/jackal_realworld_implementation3.jpeg)
+![alt text](images/jackal_realworld_implementation3.jpg)
 
 
 ---
